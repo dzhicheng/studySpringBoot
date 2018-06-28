@@ -1,8 +1,10 @@
 package com.dongzhic.study.controller;
 
-import com.dongzhic.study.Service.GirlService;
+import com.dongzhic.study.service.GirlService;
 import com.dongzhic.study.domain.Girl;
+import com.dongzhic.study.domain.Result;
 import com.dongzhic.study.repository.GirlRepository;
+import com.dongzhic.study.utils.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,19 +42,17 @@ public class GirlController {
 
     /**
      * 添加女生
-     * @param cupSize
-     * @param age
      * @return
      */
     @PostMapping(value = "addGirl")
-    public Girl addGirl (@Valid Girl girl, BindingResult bindingResult) {
+    public Result<Girl> addGirl (@Valid Girl girl, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            System.out.println(bindingResult.getFieldError().getDefaultMessage());
-            return null;
+            return ResultUtil.error(1, bindingResult.getFieldError().getDefaultMessage());
         }
         girl.setCupSize(girl.getCupSize());
         girl.setAge(girl.getAge());
-        return girlRepository.save(girl);
+
+        return ResultUtil.success(girlRepository.save(girl));
     }
 
     /**
@@ -102,4 +102,10 @@ public class GirlController {
     public void insertTwoGirl () {
         girlService.insertTwoGirl();
     }
+
+    @GetMapping(value = "getAge/{id}")
+    public void getAge(@PathVariable("id") Integer id) {
+        girlService.getGirlByAge(id);
+    }
+
 }
