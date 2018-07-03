@@ -108,4 +108,9 @@ public class GirlController {
         girlService.getGirlByAge(id);
     }
 
+    @GetMapping(value = "findByNameLike/{name}")
+    public List<Girl> findByNameLike(@PathVariable("name") String name) {
+        return girlRepository.findByNameLike('%'+name+'%');
+    }
+
 }

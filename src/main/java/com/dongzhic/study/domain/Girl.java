@@ -23,6 +23,7 @@ public class Girl {
     private Integer id;
 
     private String cupSize;
+    private String name;
 
     @Min(value = 18, message = "请输入大于18的年龄！")
     private Integer age;
@@ -60,6 +61,14 @@ public class Girl {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
